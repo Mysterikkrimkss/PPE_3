@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="api_soap" 
+    xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
+    xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:api_soap" 
+    xmlns:tns="urn:api_soap">    <!-- prototype des types utilisés -->
+    <types>
+        <xsd:schema targetNamespace="urn:api_soap">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />		
+		</xsd:schema> 
+  </types>
+
+    <!-- prototype des messages echangés -->
+
+    <message name="Donne_listRequest">
+        <part name="Telephone" type="xsd:Array[]" />
+    </message>
+    <message name="Donne_listResponse">
+        <part name="return" type="xsd:Array[]" />
+    </message>
+
+    <message name="Donne_list_rapportRequest"> 
+       <part name="Nom" type="xsd:Array[]" /> 
+    </message>
+     <message name="Donne_list_rapportResponse"> 
+         <part name="return" type="xsd:Array[]" /> 
+    </message>
+
+    <message name="Donne_echantionRequest"> 
+       <part name="Nom" type="xsd:Array[]" /> 
+    </message>
+     <message name="Donne_echantionResponse"> 
+         <part name="return" type="xsd:Array[]" /> 
+    </message>
+
+
+    <!-- association des méthodes avec les transactions -->
+    <portType name="PortTypeapi_soap">      
+        <operation name="Donne_list">
+            <wsdl:input message="tns:Donne_listRequest"/>
+            <wsdl:output message="tns:Donne_listResponse"/>
+        </operation>
+
+          <operation name="Donne_list_rapport"> -->
+            <wsdl:input message="tns:Donne_list_rapportRequest"/> 
+            <wsdl:output message="tns:Donne_list_rapportResponse"/> 
+        </operation>
+
+        <operation name="Donne_echantion"> -->
+            <wsdl:input message="tns:Donne_echantionRequest"/> 
+            <wsdl:output message="tns:Donne_echantionResponse"/> 
+        </operation>
+    </portType>    <!-- definition de l'encodage du transport de la transaction -->
+
+    <binding name="Bindapi_soap" type="tns:PortTypeapi_soap">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="Donne_list">
+            <soap:operation soapAction="urn:api_soapB#SoapDonne_list" style="rpc"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:api_soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:api_soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+         <operation name="Donne_list_rapport"> 
+            <soap:operation soapAction="urn:api_soap#SoapDonne_list_rapport" style="rpc"/> 
+            <input>
+                <soap:body use="encoded" namespace="urn:api_soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/> 
+            </input> 
+            <output> 
+                <soap:body use="encoded" namespace="urn:api_soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output> 
+         </operation> 
+
+         <operation name="Donne_echantion"> 
+            <soap:operation soapAction="urn:api_soap#SoapDonne_echantion" style="rpc"/> 
+            <input>
+                <soap:body use="encoded" namespace="urn:api_soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/> 
+            </input> 
+            <output> 
+                <soap:body use="encoded" namespace="urn:api_soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output> 
+         </operation> 
+
+    </binding>
+    <service name="Serviceapi_soap">
+        <port name="PortServiceapi_soap" binding="tns:Bindapi_soap">
+            <soap:address location="http://127.0.0.1/PPE_3/resources/views/api_soap/serveur.php" />
+        </port>
+    </service>
+</definitions>
